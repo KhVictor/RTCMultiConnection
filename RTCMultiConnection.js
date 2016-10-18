@@ -2235,7 +2235,7 @@
         this.connectNewParticipantWithAllBroadcasters = function(newParticipantId, userPreferences, broadcastersList) {
             broadcastersList = broadcastersList.split('|-,-|');
             if (!broadcastersList.length) {
-                return;
+                return;  //never get here, because split always return at least one element in the array ( so length >= 1 )
             }
 
             var firstBroadcaster = broadcastersList[0];
@@ -2253,7 +2253,13 @@
                     array.push(broadcaster);
                 }
             });
-
+            
+            var  arrayjoin = array.join( '|-,-|' );
+            
+            if( !arrayjoin ){
+	            return;
+            }
+            
             setTimeout(function() {
                 self.connectNewParticipantWithAllBroadcasters(newParticipantId, userPreferences, array.join('|-,-|'));
             }, 10 * 1000);
